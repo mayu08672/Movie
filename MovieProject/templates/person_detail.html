@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+    <!-- 名前 -->
+    <h1 class="person-name">{{ person.name }}</h1>
+
+    <!-- プロフィール画像 -->
+    <div class="profile-wrapper">
+        {% if person.profile_path %}
+        <img class="profile-img" src="https://image.tmdb.org/t/p/w300{{ person.profile_path }}" alt="{{ person.name }}">
+        {% else %}
+        <img class="profile-img" src="{% static 'images/20220401_object.png' %}" alt="No Image">
+        {% endif %}
+    </div>
+
+    <!-- 基本情報 -->
+    <div class="person-info">
+        {% if person.birthday %}
+        <p><strong>生年月日：</strong> {{ person.birthday }}</p>
+        {% endif %}
+
+        {% if person.place_of_birth %}
+        <p><strong>出生地：</strong> {{ person.place_of_birth }}</p>
+        {% endif %}
+
+        {% if person.biography %}
+        <p class="bio"><strong>説明：</strong> {{ person.biography }}</p>
+        {% endif %}
+    </div>
+
+    <h2>出演作</h2>
+
+    {% if works %}
+    <div class="works">
+        {% for w in works %}
+        <a class="poster-wrapper" href="{{ w.detail_url }}">
+
+            {% if w.poster_url %}
+            <img class="poster-img" src="{{ w.poster_url }}" alt="{{ w.title_jp }}">
+            {% else %}
+            <img class="poster-img" src="{% static 'images/20220401_object.png' %}" alt="No Image">
+            {% endif %}
+
+            <p class="work-title">{{ w.title_jp }}</p>
+
+            <p class="work-date">
+                {% if w.media_type == "movie" %}
+                公開日：{{ w.release_date|default:"不明" }}
+                {% elif w.media_type == "tv" %}
+                放送開始：{{ w.first_air_date|default:"不明" }}
+                {% else %}
+                日付：不明
+                {% endif %}
+            </p>
+
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>出演作品は見つかりませんでした。</p>
+    {% endif %}
+
+    <!-- 戻る -->
+    <p class="back-link">
+        <a href="javascript:history.back()">← 戻る</a>
+    </p>
+
+</div>
+
+<!-- CSS 読み込み -->
+<link rel="stylesheet" href="{% static 'css/person_detail.css' %}">
+{% endblock %}

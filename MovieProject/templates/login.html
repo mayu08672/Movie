@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Movie</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="{% static 'js/sidebar.js' %}"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="login-box">
+            <h2>ログイン</h2>
+            <!-- メッセージの表示 -->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="name">
+                <br>
+                <input type="password" name="password" placeholder="password">
+                <br><br>
+
+                <!-- ログインボタン（横長） -->
+                <button type="submit" name="action" value="login" class="login-button">ログイン</button>
+            </form>
+
+            <!-- 新規作成リンク -->
+            <p class="create-account-link">
+                <a href="{% url 'create_account' %}">アカウントない方はこちらから</a>
+        </div>
+    </div>
+</body>
+
+</html>

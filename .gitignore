@@ -1,0 +1,21 @@
+.env
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Django migrations（初期の0001は残す場合もある）
+*/migrations/__pycache__/
+*/migrations/*.py
+!*/migrations/0001_initial.py
+__pycache__/
+*.pyc
+__init__.py
+*/__init__.py
+
+
+
+# env
+.env
+
+# Django static files collected
+/staticfiles/

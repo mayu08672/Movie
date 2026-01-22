@@ -1,0 +1,386 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+    <!-- サブスク絞り込みボタン -->
+    <h4>配信サービスとジャンルで絞り込む</h4>
+    <div class="filter-buttons">
+        <span>配信サービス:</span>
+        <button type="button" class="provider-btn" data-provider="8">Netflix</button>
+        <button type="button" class="provider-btn" data-provider="9">Amazon Prime</button>
+        <button type="button" class="provider-btn" data-provider="15">Hulu</button>
+        <button type="button" class="provider-btn" data-provider="71">U-NEXT</button>
+        <button type="button" class="provider-btn" data-provider="337">Disney+</button>
+
+
+    </div>
+
+
+    <!-- ジャンル絞り込みボタン -->
+    <div class="filter-buttons">
+        <span>ジャンル:</span>
+        <button type="button" class="genre-btn" data-genre="28">アクション</button>
+        <button type="button" class="genre-btn" data-genre="35">コメディ</button>
+        <button type="button" class="genre-btn" data-genre="878">SF</button>
+        <button type="button" class="genre-btn" data-genre="53">スリラー</button>
+        <button type="button" class="genre-btn" data-genre="27">ホラー</button>
+        <button type="button" class="genre-btn" data-genre="18">ドラマ</button>
+        <button type="button" class="genre-btn" data-genre="10749">ロマンス</button>
+        <button type="button" class="genre-btn" data-genre="16">アニメ</button>
+
+    </div>
+
+    <!-- 検索フォーム -->
+    <div class="search-section">
+        <h1 class="section-title">作品をさがす</h1>
+        <form id="searchForm" class="search-form">
+            <input type="text" id="searchInput" placeholder="作品名/人物名" required>
+            <button type="submit">検索</button>
+        </form>
+    </div>
+
+
+    <!-- 検索結果 -->
+    <div id="movieResults" class="movie-grid"></div>
+
+    <!-- 最新映画一覧 -->
+    <div class="latest-section">
+        <h1 class="section-title">最新作品</h1>
+        <div class="movie-grid">
+            {% if movies %}
+            {% for movie in movies %}
+            <div class="movie">
+                <a href="{% url 'movie_detail' movie.id %}" class="movie-link">
+                    {% if movie.poster_path %}
+                    <img class="poster" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+                        alt="{{ movie.title }}">
+                    {% else %}
+                    <div class="poster no-image">No Image</div>
+                    {% endif %}
+                    <div class="info">
+                        <div class="title">{{ movie.title }}</div>
+                        <div class="date">{{ movie.release_date }}</div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p style="color:#ccc;">該当する映画はありません。</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<script src="{% static 'js/latest_search.js' %}" defer></script>
+
+<style>
+    body {
+        background: radial-gradient(circle at 50% 20%, #1a1a1a, #0a0a0a 70%);
+        color: #fff;
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% -10%, rgba(255, 0, 0, 0.2), transparent 60%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 26px;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+    }
+
+    /* 検索フォーム */
+    .search-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 35px;
+    }
+
+    .search-form {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .search-form input[type="text"] {
+        padding: 12px 18px;
+        width: 280px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        background: #2b2b2b;
+        color: #fff;
+        box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.1);
+    }
+
+    .search-form button {
+        padding: 12px 18px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #00bbff, #2c00cc);
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        letter-spacing: 1px;
+        box-shadow: 0 0 8px rgba(147, 236, 230, 0.281);
+    }
+
+    .search-form button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 12px rgba(170, 215, 229, 0.8);
+    }
+
+    /* ボタン */
+    .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+
+    .filter-buttons span {
+        margin-right: 10px;
+        font-weight: bold;
+        color: #ff6666;
+    }
+
+    .filter-buttons button {
+        padding: 8px 14px;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        background: #222;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .filter-buttons button.active {
+        background: linear-gradient(90deg, #ff0033, #cc0028);
+        border-color: #ff0033;
+        color: #fff;
+    }
+
+    /* 映画カード */
+    .movie-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+    }
+
+    .movie {
+        background: #111;
+        color: #fff;
+        padding: 0;
+        border-radius: 12px;
+        text-align: center;
+        width: 160px;
+        transition: 0.25s;
+        box-shadow: 0 6px 15px rgba(255, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .movie:hover {
+        transform: scale(1.08);
+        box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3);
+    }
+
+    .movie img,
+    .poster.no-image {
+        margin: 0 auto 10px;
+        width: 140px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        background-color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+        box-shadow: 0 4px 10px rgba(86, 18, 18, 0.5);
+    }
+
+    .movie .title {
+        font-weight: bold;
+        font-size: 15px;
+        margin: 6px 0;
+    }
+
+    .movie .date {
+        font-size: 12px;
+        color: #aaa;
+    }
+
+    /* 映画カード内リンクの見た目調整 */
+    .movie-link {
+        text-decoration: none;
+        color: inherit;
+        /* リンク色を消す */
+        display: block;
+    }
+
+    /* タイトル */
+    .movie .title {
+        font-weight: 700;
+        font-size: 15px;
+        margin: 8px 0 2px;
+        color: #ffffff;
+        line-height: 1.3;
+    }
+
+    /* 公開日 */
+    .movie .date {
+        font-size: 12px;
+        color: #bbbbbb;
+    }
+
+    /* ホバー時だけ少し変化 */
+    .movie:hover .title {
+        color: #ff6666;
+    }
+
+    .movie:hover .date {
+        color: #ff9999;
+    }
+
+    /* =========================
+   検索結果エリア 全体
+========================= */
+
+    #movieResults {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+        padding-bottom: 40px;
+    }
+
+    /* カテゴリ見出し（映画 / ドラマ / キャスト） */
+    #movieResults h2 {
+        grid-column: 1 / -1;
+        margin: 30px 0 10px;
+        font-size: 22px;
+        letter-spacing: 1px;
+        color: #ff6666;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 6px;
+    }
+
+    /* =========================
+   検索結果カード
+========================= */
+
+    #movieResults .movie {
+        background: linear-gradient(180deg, #151515, #0d0d0d);
+        border-radius: 14px;
+        padding: 12px 10px 14px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    #movieResults .movie:hover {
+        transform: translateY(-6px) scale(1.05);
+        box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+    }
+
+    /* ポスター・人物画像 */
+    #movieResults .movie img {
+        width: 140px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 8px;
+        background: #000;
+    }
+
+    /* タイトル（2行まで） */
+    #movieResults .movie h3 {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.35;
+        margin: 6px 0 4px;
+        color: #ffffff;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* 日付・代表作 */
+    #movieResults .movie p {
+        font-size: 11px;
+        color: #aaaaaa;
+        margin: 0;
+    }
+
+    /* hover時だけ少し主張 */
+    #movieResults .movie:hover h3 {
+        color: #ff7b7b;
+    }
+
+    #movieResults .movie:hover p {
+        color: #ffb3b3;
+    }
+
+    /* =========================
+   件数多いときの疲労軽減
+========================= */
+
+    @media (max-width: 600px) {
+        #movieResults {
+            gap: 18px;
+        }
+
+        #movieResults .movie img {
+            width: 120px;
+            height: 180px;
+        }
+    }
+</style>
+{% endblock %}

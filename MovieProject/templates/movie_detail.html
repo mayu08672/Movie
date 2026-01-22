@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="movie-detail-container" id="movieDetail">
+    <!-- JSで映画詳細を描画 -->
+</div>
+
+<!-- 映画詳細用JS -->
+<script src="{% static 'js/movie_detail.js' %}" defer></script>
+
+
+
+<div id="movieResults"></div>
+
+<style>
+    body {
+        background: radial-gradient(circle at top, #1b1b1b, #000);
+        color: #fff;
+        font-family: "Segoe UI", "Noto Sans JP", sans-serif;
+        margin: 0;
+        padding: 40px 10%;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 30px 0;
+    }
+
+    .search-form input {
+        width: 300px;
+        padding: 12px 16px;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        backdrop-filter: blur(8px);
+    }
+
+    .search-form button {
+        padding: 12px 20px;
+        border-radius: 30px;
+        border: none;
+        background: #e50914;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .search-form button:hover {
+        background: #ff4754;
+        transform: translateY(-2px);
+    }
+
+    .movie-detail-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .poster {
+        width: 320px;
+        height: 480px;
+        object-fit: cover;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgb(0, 0, 0);
+    }
+
+    .info {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .info h1 {
+        font-size: 2.4em;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 4px solid #e50914;
+        display: inline-block;
+    }
+
+    .movie-section {
+        margin-top: 25px;
+    }
+
+    .movie-section h2 {
+        font-size: 1.6em;
+        margin-bottom: 15px;
+        border-left: 6px solid #e50914;
+        padding-left: 12px;
+    }
+
+    .cast-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .cast-card {
+        width: 130px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 12px;
+        backdrop-filter: blur(6px);
+        text-align: center;
+        box-shadow: 0 4px 10px rgb(0, 0, 0);
+        transition: 0.2s;
+    }
+
+    .cast-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgb(0, 0, 0);
+    }
+
+    .cast-card img {
+        width: 100px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+
+    .provider-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .provider-card {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 4px 10px rgb(0, 0, 0);
+        transition: 0.2s;
+    }
+
+    .provider-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgb(0, 0, 0);
+    }
+
+    a {
+        color: #ff5f6d;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #ffa3aa;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% load static %}
+
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/create_account.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="center-box">
+    <h2>アカウント作成</h2>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+            </li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+
+
+
+    <form method="POST" action="{% url 'create_account' %}">
+
+        {% csrf_token %}
+        <br>
+        <input type="text" id="user_name" name="user_name" placeholder="name" required>
+        </br>
+        <input type="password" id="user_password" name="user_password" placeholder="password" required>
+        <div class="button-wrapper">
+            <button type="submit">作成</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

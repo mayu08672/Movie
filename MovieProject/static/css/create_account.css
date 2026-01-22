@@ -1,0 +1,92 @@
+/* create_account.css */
+
+/* ページ全体 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #121212;
+    /* ダーク背景 */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 中央ボックス */
+.center-box {
+    background: #1e1e1e;
+    /* ログインページと同じ色 */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    width: 350px;
+    text-align: center;
+}
+
+/* タイトル */
+.center-box h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* メッセージ表示 */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.messages li {
+    background: #ff4d4d;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* 入力フィールド */
+.center-box input[type="text"],
+.center-box input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2c2c2c;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.center-box input::placeholder {
+    color: #aaa;
+}
+
+/* ボタンラッパー */
+.button-wrapper {
+    width: 100%;
+}
+
+/* 作成ボタン */
+.button-wrapper button {
+    width: 100%;
+    padding: 12px;
+    background: #4caf50;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-wrapper button:hover {
+    background: #45a049;
+}

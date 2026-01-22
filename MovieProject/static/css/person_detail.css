@@ -1,0 +1,146 @@
+/* 全体 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #0a0a0a 70%);
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* コンテナ */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 名前 */
+.person-name {
+    text-align: center;
+    font-size: 34px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 12px rgba(255, 0, 0, 0.45);
+}
+
+/* プロフィール画像 */
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.profile-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.35);
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    background: #000;
+}
+
+/* 基本情報 */
+.person-info {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 45px;
+    line-height: 1.7;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.person-info p {
+    margin: 10px 0;
+    color: #ddd;
+}
+
+.person-info strong {
+    color: #ff6666;
+}
+
+/* 説明文 */
+.bio {
+    margin-top: 15px;
+    white-space: pre-wrap;
+}
+
+/* 出演作見出し */
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.35);
+}
+
+/* 出演作品一覧 */
+.works {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 25px;
+    justify-items: center;
+    margin-bottom: 40px;
+}
+
+/* ポスター */
+.poster-wrapper {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.poster-wrapper:hover {
+    transform: scale(1.08);
+}
+
+.poster-img {
+    width: 140px;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #000;
+    box-shadow: 0 6px 18px rgba(255, 0, 0, 0.25);
+}
+
+.work-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 6px 0 2px;
+}
+
+.work-date {
+    font-size: 12px;
+    color: #bbb;
+}
+
+
+
+/* 戻るリンク */
+.back-link {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back-link a {
+    color: #ff6666;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.back-link a:hover {
+    color: #ff9999;
+}

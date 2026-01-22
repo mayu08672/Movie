@@ -1,0 +1,73 @@
+from django.shortcuts import render
+import requests
+from django.http import HttpResponse
+
+TMDB_HEADERS = {
+    "accept": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjN2M4YTFiYTExYzk4MjM1ODczNjAyNjBlYjk5ZTUwNiIsIm5iZiI6MTc1OTgwODM3My43Nzc5OTk5LCJzdWIiOiI2OGU0OGI3NTI3ZTFjZDEyODU2MTgxM2QiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.L1lIlKJOH-YRL1zrBby86dVcn79QR1OTJUgzqOGsdno"
+}
+
+# サブスク名 → URL のマッピング
+SUBSCRIPTION_URLS = {
+    "Netflix": "https://www.netflix.com/jp/",
+    "Amazon Prime Video": "https://www.amazon.co.jp/Prime-Video/b?ie=UTF8&node=3535604051",
+    "Disney+": "https://www.disneyplus.com/ja-jp",
+    "Hulu": "https://www.hulu.jp/",
+    # 必要に応じて追加
+}
+def tv_detail(request, tv_id):
+    # TV詳細情報
+    url_detail = f"https://api.themoviedb.org/3/tv/{tv_id}"
+    params = {"language": "ja-JP"}
+    tv_resp = requests.get(url_detail, headers=TMDB_HEADERS, params=params)
+    tv = tv_resp.json()
+
+    # キャスト情報
+    url_credits = f"https://api.themoviedb.org/3/tv/{tv_id}/credits"
+    credits_resp = requests.get(url_credits, headers=TMDB_HEADERS, params=params)
+    credits = credits_resp.json().get("cast", [])[:10]
+
+    # サブスク情報（日本）
+    url_providers = f"https://api.themoviedb.org/3/tv/{tv_id}/watch/providers"
+    providers_resp = requests.get(url_providers, headers=TMDB_HEADERS)
+    providers = providers_resp.json().get("results", {}).get("JP", {}).get("flatrate", [])
+
+    for p in providers:
+        p["url"] = SUBSCRIPTION_URLS.get(p["provider_name"], "#")
+
+    return render(request, "movie_detail.html", {
+        "tv": tv,
+        "cast": credits,
+        "providers": providers,
+    })
+
+
+def movie_detail(request, movie_id):
+    # 映画詳細情報
+    url_detail = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    params = {"language": "ja-JP"}
+    movie_resp = requests.get(url_detail, headers=TMDB_HEADERS, params=params)
+    movie = movie_resp.json()
+
+    # キャスト情報
+    url_credits = f"https://api.themoviedb.org/3/movie/{movie_id}/credits"
+    credits_resp = requests.get(url_credits, headers=TMDB_HEADERS, params=params)
+    credits = credits_resp.json().get("cast", [])[:10]  # 上位10人だけ
+
+    # サブスク情報（日本）
+    url_providers = f"https://api.themoviedb.org/3/movie/{movie_id}/watch/providers"
+    providers_resp = requests.get(url_providers, headers=TMDB_HEADERS)
+    providers = providers_resp.json().get("results", {}).get("JP", {}).get("flatrate", [])
+
+    # URL を追加
+    for p in providers:
+        p["url"] = SUBSCRIPTION_URLS.get(p["provider_name"], "#")
+
+    return render(request, "movie_detail.html", {
+        "movie": movie,
+        "cast": credits,
+        "providers": providers
+    })
+
+
+

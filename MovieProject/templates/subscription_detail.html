@@ -1,0 +1,9 @@
+<h1>{{ subscription.subscription_name }}</h1>
+
+<p>価格：{{ subscription.price }}円</p>
+<p>契約日：{{ subscription.contract_date }}</p>
+<p>メモ：{{ subscription.memo }}</p>
+
+<a href="{% url 'subscription_edit' subscription.subscription_id %}">編集</a>
+<a href="{% url 'subscription_delete' subscription.subscription_id %}">削除</a>
+<a href="{% url 'subscription_list' %}">戻る</a>

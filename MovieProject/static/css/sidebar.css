@@ -1,0 +1,66 @@
+/* サイドバー全体のスタイル */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    /* ヘッダーの下 */
+    left: 0;
+    width: 0;
+    /* 最初は閉じている */
+    height: calc(100% - 60px);
+    /* ヘッダー分を引いた高さ */
+    background-color: rgba(0, 0, 0, 0.85);
+    /* 半透明黒で落ち着いた雰囲気 */
+    overflow-x: hidden;
+    /* 横スクロールは不要 */
+    overflow-y: auto;
+    /* 縦スクロール可能 */
+    transition: width 0.3s ease;
+    /* 開閉アニメーション */
+    padding-top: 20px;
+    color: white;
+    white-space: nowrap;
+    z-index: 999;
+    /* ヘッダーより上に表示 */
+}
+
+/* サイドバーが開いたときのスタイル */
+.sidebar.open {
+    width: 300px;
+    /* 幅を広げる */
+}
+
+/* サイドバーリンクのスタイル */
+.sidebar a {
+    display: block;
+    font-size: 20px;
+    padding: 12px 25px;
+    color: #ffffff;
+    /* 白文字でコントラスト */
+    text-decoration: none;
+    margin: 0;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* ホバー時のスタイル */
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* ほんのり白背景で強調 */
+    color: #ffffff;
+    /* 文字は白を維持 */
+    border-radius: 4px;
+    /* 少し丸みをつけると柔らかい印象 */
+}
+
+/* スクロールバーのカスタマイズ（おしゃれにしたい場合） */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+}
