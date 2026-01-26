@@ -2,13 +2,12 @@
 from django.shortcuts import render
 import requests
 from datetime import datetime
-
+from django.conf import settings
 
 TMDB_HEADERS = {
     "accept": "application/json",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjN2M4YTFiYTExYzk4MjM1ODczNjAyNjBlYjk5ZTUwNiIsIm5iZiI6MTc1OTgwODM3My43Nzc5OTk5LCJzdWIiOiI2OGU0OGI3NTI3ZTFjZDEyODU2MTgxM2QiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.L1lIlKJOH-YRL1zrBby86dVcn79QR1OTJUgzqOGsdno"
+    "Authorization": f"Bearer {settings.TMDB_ACCESS_TOKEN}",
 }
-
 
 def latest_movies(request):
     url = "https://api.themoviedb.org/3/movie/now_playing"
