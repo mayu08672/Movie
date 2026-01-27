@@ -3,6 +3,32 @@ from django.shortcuts import render
 import requests
 from datetime import datetime
 from django.conf import settings
+from django.http import JsonResponse
+
+def tmdb_search(request):
+    query = request.GET.get("query")
+    search_type = request.GET.get("type", "movie")  # movie / tv / person
+
+    if not query:
+        return JsonResponse({"results": []})
+
+    url = f"https://api.themoviedb.org/3/search/{search_type}"
+    params = {
+        "query": query,
+        "language": "ja-JP",
+        "page": 1,
+        "include_adult": "false"
+    }
+
+    response = requests.get(url, headers=TMDB_HEADERS, params=params)
+
+    if response.status_code != 200:
+        return JsonResponse({"results": []})
+
+    return JsonResponse({
+        "results": response.json().get("results", [])
+    })
+
 
 TMDB_HEADERS = {
     "accept": "application/json",
@@ -36,3 +62,28 @@ def latest_movies(request):
                 movie["poster_url"] = "/static/noimage.png"
 
     return render(request, "latest_movies.html", {"movies": movies})
+
+def tmdb_discover(request):
+    media_type = request.GET.get("type", "movie")
+    genre = request.GET.get("genre", "")
+    provider = request.GET.get("provider", "")
+
+    url = f"https://api.themoviedb.org/3/discover/{media_type}"
+
+    params = {
+        "language": "ja-JP",
+        "sort_by": "popularity.desc"
+    }
+
+    if genre:
+        params["with_genres"] = genre
+    if provider:
+        params["with_watch_providers"] = provider
+        params["watch_region"] = "JP"
+
+    res = requests.get(url, headers=TMDB_HEADERS, params=params)
+
+    if res.status_code != 200:
+        return JsonResponse({"results": []})
+
+    return JsonResponse({"results": res.json().get("results", [])})

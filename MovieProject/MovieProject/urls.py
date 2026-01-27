@@ -29,10 +29,12 @@ urlpatterns = [
     path('tv/<int:tv_id>/', views.tv_detail, name='tv_detail'),
      path("api/tmdb/search/", views.tmdb_search),
     path("api/tmdb/discover/", views.tmdb_discover),
-    
-    path('person/<int:person_id>/', views.person_detail, name='person_detail'),
+    path("api/tmdb/search/", views.tmdb_search, name="tmdb_search"),
+    path("collection/<int:collection_id>/", views.collection_page, name="collection_page"),
+    path('person/<int:person_id>/', person_detail, name='person_detail'),
     path("api/movie/<int:id>/", views.tmdb_movie_detail),
     path("api/tv/<int:id>/", views.tmdb_tv_detail),
+    path("api/collection/<int:collection_id>/", views.collection_detail),
     path("api/person/<int:id>/", views.tmdb_person_detail),
     path("api/person/<int:id>/credits/", views.tmdb_person_works),
 

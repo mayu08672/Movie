@@ -1,71 +1,208 @@
+/* ───────────────
+   共通スタイル
+──────────────────────────── */
 body {
-    background-color: #121212;
-    color: #fff;
-    font-family: "Segoe UI", "Noto Sans JP", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #f5f5f5;
     margin: 0;
-    padding: 40px 10%;
-}
-
-.movie-detail-container {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-.movie-title {
-    font-size: 2.2em;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #1e90ff;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.movie-section h2 {
-    font-size: 1.6em;
-    margin-top: 40px;
-    border-left: 5px solid #1e90ff;
-    padding-left: 10px;
-}
-
-ul {
-    list-style: none;
     padding: 0;
-    margin-top: 10px;
-}
-
-li {
-    background: #1e1e1e;
-    margin: 6px 0;
-    padding: 10px 15px;
-    border-radius: 10px;
-    transition: background 0.3s ease;
-}
-
-li:hover {
-    background: #2a2a2a;
+    color: #333;
 }
 
 a {
     text-decoration: none;
-    color: #1e90ff;
-    transition: color 0.3s ease;
+    color: inherit;
 }
 
-a:hover {
-    color: #63b3ff;
+h1,
+h2 {
+    margin: 0.5em 0;
 }
 
-.back-link {
-    margin-top: 40px;
+/* ───────────────
+   詳細ページ全体
+──────────────────────────── */
+#movieDetail {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
-/* アニメーション */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+#movieDetail img.poster {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    align-self: center;
+}
+
+#movieDetail .info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#movieDetail .info p {
+    line-height: 1.5;
+}
+
+/* ───────────────
+   セクションタイトル
+──────────────────────────── */
+.movie-section h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.3rem;
+}
+
+/* ───────────────
+   キャストリスト
+──────────────────────────── */
+.cast-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.cast-card {
+    width: 100px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.cast-card img {
+    width: 100px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.cast-card .name {
+    font-weight: bold;
+    margin-top: 0.3rem;
+}
+
+.cast-card .character {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* ───────────────
+   配信サービスリスト
+──────────────────────────── */
+.provider-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.provider-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    padding: 5px;
+}
+
+/* ───────────────
+   シリーズカード
+──────────────────────────── */
+.series-card {
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.series-card img {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.series-name {
+    margin-top: 0.3rem;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+/* ───────────────
+   映画一覧（シリーズ詳細ページ内）
+──────────────────────────── */
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.movie-card {
+    width: 120px;
+    text-align: center;
+}
+
+.movie-card img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.movie-card .title {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+}
+
+/* ───────────────
+   戻るリンク
+──────────────────────────── */
+.back-link a {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+/* ───────────────
+   レスポンシブ対応
+──────────────────────────── */
+@media (min-width: 768px) {
+    #movieDetail {
+        flex-direction: row;
+        gap: 2rem;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    #movieDetail img.poster {
+        margin-bottom: 0;
+    }
+
+    #movieDetail .info {
+        flex: 1;
+    }
+
+    .cast-card,
+    .movie-card,
+    .series-card {
+        width: 120px;
+    }
+
+    .cast-card img,
+    .movie-card img,
+    .series-card img {
+        width: 120px;
     }
 }

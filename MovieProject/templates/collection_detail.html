@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="collectionDetail"></div>
+<link rel="stylesheet" href="/static/css/collection.css">
+
+<script src="/static/js/collection.js"></script>
+
+<script>
+    // Django → JS に安全に渡す（文字列として埋め込む）
+    const collectionId = "{{ collection_id }}";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (collectionId) {
+            fetchCollectionDetail(Number(collectionId));  // 数値化
+        } else {
+            document.getElementById("collectionDetail").innerHTML =
+                "<p>シリーズIDが無効です。</p>";
+        }
+    });
+</script>
+{% endblock %}

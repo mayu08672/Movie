@@ -42,11 +42,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchWordTMDB(query, 'person')
             ]);
 
+            const totalCount =
+                (movies.results?.length || 0) +
+                (tvs.results?.length || 0) +
+                (people.results?.length || 0);
+
+            // 👇全部ゼロだった場合のメッセージ
+            if (totalCount === 0) {
+                movieResults.innerHTML = `
+                <p>「${query}」に一致する作品や人物は見つかりませんでした。</p>
+            `;
+                return;
+            }
+
             displayAllResults(movies, tvs, people);
+
         } catch {
             movieResults.innerHTML = '<p>検索エラー</p>';
         }
     }
+
 
     /* =========================
        🎛 絞り込みトグル
