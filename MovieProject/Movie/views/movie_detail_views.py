@@ -13,6 +13,8 @@ SUBSCRIPTION_URLS = {
     "Netflix": "https://www.netflix.com/jp/",
     "Amazon Prime Video": "https://www.amazon.co.jp/Prime-Video/b?ie=UTF8&node=3535604051",
     "Disney+": "https://www.disneyplus.com/ja-jp",
+    "Apple TV+": "https://tv.apple.com/jp",
+    "U-NEXT": "https://video.unext.jp/",
     "Hulu": "https://www.hulu.jp/",
     # 必要に応じて追加
 }

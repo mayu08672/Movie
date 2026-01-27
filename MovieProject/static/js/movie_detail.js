@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'u-next': title => `https://video.unext.jp/search?query=${encodeURIComponent(title)}`,
         'amazon prime video': title => `https://www.amazon.co.jp/s?k=${encodeURIComponent(title)}&i=instant-video`,
         'disney plus': title => `https://www.disneyplus.com/ja-jp/search?q=${encodeURIComponent(title)}`,
-        'dtv': title => `https://video.dmkt-sp.jp/search?keyword=${encodeURIComponent(title)}`
+        'apple tv plus': title => `https://tv.apple.com/jp/search/${encodeURIComponent(title)}`,
     };
 
     /* ───────────────
