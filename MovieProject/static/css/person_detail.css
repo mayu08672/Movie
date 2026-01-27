@@ -144,7 +144,7 @@ h2 {
 
     display: -webkit-box;
     /* 2行まで表示 */
-    -webkit-line-clamp: 2;
+
     /* 最大2行 */
     -webkit-box-orient: vertical;
     overflow: hidden;
