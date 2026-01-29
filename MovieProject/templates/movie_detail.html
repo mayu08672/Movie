@@ -6,38 +6,23 @@
     <p>読み込み中…</p>
 </div>
 
-<!-- 映画詳細用JS -->
 <script src="{% static 'js/movie_detail.js' %}" defer></script>
 
 <style>
-    /* ─────────────── 全体 ─────────────── */
     body {
         background: radial-gradient(circle at top, #1b1b1b, #000);
         color: #fff;
         font-family: "Segoe UI", "Noto Sans JP", sans-serif;
         margin: 0;
-        padding: 40px 10%;
+        padding: 40px 8%;
     }
 
-    /* ─────────────── 詳細コンテナ ─────────────── */
+    /* 全体 */
     .movie-detail-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 30px;
-        animation: fadeIn 0.6s ease-in-out;
-    }
-
-    /* PCではポスターと情報を横並び */
-    @media(min-width: 800px) {
-        .movie-detail-container {
-            flex-direction: row;
-            align-items: flex-start;
-        }
-
-        .poster {
-            margin-right: 30px;
-        }
+        gap: 32px;
     }
 
     /* ポスター */
@@ -45,111 +30,108 @@
         width: 320px;
         height: 480px;
         object-fit: cover;
-        border-radius: 14px;
-        box-shadow: 0 10px 30px rgb(0, 0, 0);
+        border-radius: 18px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
     }
 
-    /* 情報部分（詳細 & 配信サービス） */
+    /* 情報 */
     .info {
         width: 100%;
-        max-width: 900px;
+        max-width: 720px;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 20px;
+        padding: 28px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 28px;
     }
 
     .info h1 {
-        font-size: 2.4em;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 4px solid #e50914;
-        display: inline-block;
+        font-size: 2em;
+        border-left: 6px solid #e50914;
+        padding-left: 14px;
     }
 
-    .info p {
-        line-height: 1.6;
+    /* メタ情報 */
+    .meta-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
     }
 
-    /* 配信サービスを詳細コンテナ内に表示 */
+    .meta-info span {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.9em;
+    }
+
+    /* セクション */
+    .movie-section h2 {
+        font-size: 1.3em;
+        margin-bottom: 12px;
+        border-left: 5px solid #e50914;
+        padding-left: 10px;
+    }
+
+    /* あらすじ */
+    .overview {
+        line-height: 1.9;
+        color: #e0e0e0;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    /* キャスト */
+    .cast-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .cast-card {
+        width: 120px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
+        padding: 10px;
+        text-align: center;
+        transition: 0.2s;
+    }
+
+    .cast-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .cast-card img {
+        width: 100%;
+        height: 170px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* 配信 */
     .provider-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 16px;
     }
 
-    /* 配信カード */
     .provider-card {
-        width: 80px;
-        height: 80px;
+        width: 78px;
+        height: 78px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        backdrop-filter: blur(6px);
-        box-shadow: 0 4px 10px rgb(0, 0, 0);
-        transition: 0.2s;
     }
 
     .provider-card img {
         width: 60px;
         height: 60px;
         object-fit: contain;
-    }
-
-    .provider-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgb(0, 0, 0);
-    }
-
-    /* キャストリストコンテナ */
-    .cast-container {
-        margin-top: 40px;
-        display: flex;
-        justify-content: center;
-        /* 横方向中央揃え */
-        width: 100%;
-    }
-
-    /* キャストリスト */
-    .cast-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        /* カード同士も中央揃え */
-        gap: 20px;
-        max-width: 900px;
-        /* コンテナ幅を制限して中央に寄せる */
-    }
-
-
-
-
-    /* シリーズカード */
-    .series-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 180px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 10px;
-        gap: 8px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgb(0, 0, 0);
-        transition: 0.2s;
-    }
-
-    .series-card img {
-        width: 150px;
-        height: 225px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-    .series-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgb(0, 0, 0);
     }
 
     /* リンク */
@@ -163,16 +145,15 @@
         color: #ffa3aa;
     }
 
-    /* フェードインアニメーション */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
+    /* モバイル */
+    @media (max-width: 600px) {
+        body {
+            padding: 20px;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        .poster {
+            width: 260px;
+            height: auto;
         }
     }
 </style>
