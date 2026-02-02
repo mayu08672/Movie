@@ -6,6 +6,9 @@ from datetime import datetime
 from django.conf import settings
 from django.http import JsonResponse
 
+print("latest_movie_views START")
+
+
 def tmdb_search(request):
     query = request.GET.get("query")
     search_type = request.GET.get("type", "movie")  # movie / tv / person
@@ -30,6 +33,7 @@ def tmdb_search(request):
         "results": response.json().get("results", [])
     })
 
+print("before TMDB_HEADERS")
 
 TMDB_HEADERS = {
     "accept": "application/json",
