@@ -37,11 +37,6 @@ def tmdb_search(request):
     })
 
 
-TMDB_HEADERS = {
-    "accept": "application/json",
-    "Authorization": f"Bearer {settings.TMDB_ACCESS_TOKEN}",
-}
-
 def latest_movies(request):
     url = "https://api.themoviedb.org/3/movie/now_playing"
     params = {
