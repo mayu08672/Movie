@@ -1,5 +1,5 @@
 from django.urls import path
-from Movie import views
+from MovieProject import views
 from django.contrib import admin
 from django.shortcuts import redirect
 from MovieProject.views import latest_movies, tmdb_search, tmdb_discover
