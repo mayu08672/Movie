@@ -7,6 +7,10 @@ from django.conf import settings
 from django.http import JsonResponse
 
 
+TMDB_HEADERS = {
+    "accept": "application/json",
+    "Authorization": f"Bearer {settings.TMDB_ACCESS_TOKEN}",
+}
 
 def tmdb_search(request):
     query = request.GET.get("query")
