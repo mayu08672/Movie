@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from ..services.supabase_client import supabase
+from supabase import create_client, Client
+
 
 def create_account(request):
     if request.method == 'POST':
