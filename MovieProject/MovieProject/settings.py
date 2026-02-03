@@ -31,7 +31,6 @@ SECRET_KEY = 'django-insecure-%ri2_ko+i+rxaz&2nb&x5+cu27l5woy2bowi*fdt%9wjqydu=l
 DEBUG = True
 
 ALLOWED_HOSTS = []
-SECRET_KEY = "railway-temp-secret-key"
 
 
 
