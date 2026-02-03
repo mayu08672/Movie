@@ -2,11 +2,12 @@ from django.urls import path
 from Movie import views
 from django.contrib import admin
 from django.shortcuts import redirect
-
+from Movie.views.latest_movie_views import latest_movies
 
 urlpatterns = [
     path('', lambda request: redirect('/login/')),
-    path("latest_movies/", views.latest_movies, name="latest_movies"),
+    
+    path("latest_movies/", latest_movies, name="latest_movies"),
     path('movie/<int:movie_id>/', views.movie_detail, name='movie_detail'),
     path('tv/<int:tv_id>/', views.tv_detail, name='tv_detail'),
     path("api/tmdb/search/", views.tmdb_search, name="tmdb_search"),
