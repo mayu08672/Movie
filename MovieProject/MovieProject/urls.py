@@ -3,6 +3,13 @@ from Movie import views
 from django.contrib import admin
 from django.shortcuts import redirect
 from Movie.views.latest_movie_views import latest_movies
+from Movie.views.movie_detail_views import movie_detail, tv_detail
+from Movie.views.tmdb_views import tmdb_search
+from Movie.views.collection_views import collection_page, collection_detail
+from Movie.views.person_detail_views import person_detail
+from Movie.views.auth_views import my_subscriptions
+from Movie.views.create_account_views import create_account
+
 
 urlpatterns = [
     path('', lambda request: redirect('/login/')),
