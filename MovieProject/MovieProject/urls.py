@@ -2,8 +2,7 @@ from django.urls import path
 from Movie import views
 from django.contrib import admin
 from django.shortcuts import redirect
-from Movie.views import latest_movies, tmdb_search, tmdb_discover
-
+from ..Movie.views import latest_movies, tmdb_search, tmdb_discover
 urlpatterns = [
     path('', lambda request: redirect('/login/')),
     
