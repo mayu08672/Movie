@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import JsonResponse
 
 
+
 TMDB_HEADERS = {
     "accept": "application/json",
     "Authorization": f"Bearer {settings.TMDB_ACCESS_TOKEN}",
