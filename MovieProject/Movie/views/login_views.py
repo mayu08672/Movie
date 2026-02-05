@@ -17,7 +17,7 @@ def login_view(request):
             return render(request, "login.html")
 
         try:
-            # 🔹 Supabaseからユーザー取得
+            # Supabase からユーザー取得
             response = (
                 supabase
                 .table("users")
@@ -26,7 +26,7 @@ def login_view(request):
                 .execute()
             )
 
-            users = response.data
+            users = response.data or []
 
             if not users:
                 messages.error(request, "ユーザーが見つかりません。")
@@ -34,30 +34,33 @@ def login_view(request):
 
             user_data = users[0]
 
-            # 🔹 パスワード照合（Supabaseのハッシュ）
+            # Supabaseのハッシュと照合
             if not check_password(password, user_data["password"]):
                 messages.error(request, "パスワードが違います。")
                 return render(request, "login.html")
 
-            # 🔹 Djangoユーザー取得 or 作成
-            try:
-                django_user = User.objects.get(username=name)
-            except User.DoesNotExist:
-                django_user = User.objects.create(
-                    username=name,
-                    supabase_user_id=user_data["user_id"]
-                )
-                # 🔴 重要：Django側ではパスワードを使わない
-                django_user.set_unusable_password()
-                django_user.save()
+            # Djangoユーザー取得 or 作成
+            django_user, created = User.objects.get_or_create(
+                username=name,
+                defaults={
+                    "supabase_user_id": user_data["user_id"],
+                    "is_active": True,   # ← ここ超重要
+                }
+            )
 
-            # 🔴 backend 明示（これがないとログイン保持されない）
+            if created:
+                django_user.set_unusable_password()
+
+            # 既存ユーザーでも念のため有効化
+            django_user.is_active = True
+            django_user.save()
+
+            # backend 明示（これがないと login() が無効）
             django_user.backend = "django.contrib.auth.backends.ModelBackend"
 
-            # 🔹 ログイン
             login(request, django_user)
 
-            # 🔹 成功時は必ず redirect
+            # 成功時は必ず redirect
             return redirect("latest_movies")
 
         except Exception as e:
