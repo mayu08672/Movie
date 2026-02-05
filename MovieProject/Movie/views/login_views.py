@@ -22,26 +22,29 @@ def login_view(request):
                 .execute()
 
             users = response.data
-
             if not users:
                 messages.error(request, 'ユーザーが見つかりません。')
                 return render(request, 'login.html')
 
             user_data = users[0]
 
+            # Supabaseのハッシュと照合
             if not check_password(password, user_data['password']):
                 messages.error(request, 'パスワードが違います。')
                 return render(request, 'login.html')
 
-            # Djangoユーザー取得 or 作成
-            django_user, created = User.objects.get_or_create(
-                username=name,
-                defaults={
-                    "supabase_user_id": user_data["user_id"]
-                }
-            )
+            # 🔴 Djangoユーザー取得 or 正しく作成
+            try:
+                django_user = User.objects.get(username=name)
+            except User.DoesNotExist:
+                django_user = User.objects.create_user(
+                    username=name,
+                    password=None  # Supabase管理
+                )
+                django_user.supabase_user_id = user_data['user_id']
+                django_user.save()
 
-            # 🔴 ここ超重要
+            # 🔴 backend 明示（必須）
             django_user.backend = 'django.contrib.auth.backends.ModelBackend'
 
             login(request, django_user)

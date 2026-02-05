@@ -32,17 +32,20 @@ def create_account(request):
 
         supabase_user_id = response.data[0]['user_id']
 
-        # 🔴 Djangoユーザー作成
-        django_user = User.objects.create(
-            username=name,
-            supabase_user_id=supabase_user_id
-        )
+        # Djangoユーザー作成（set_password 必須）
+    django_user = User.objects.create_user(
+    username=name,
+    password=None  # ← Supabase管理なのでDjangoでは使わない
+)
 
-        # 🔴 backend 明示（超重要）
-        django_user.backend = 'django.contrib.auth.backends.ModelBackend'
+    django_user.supabase_user_id = supabase_user_id
+    django_user.save()
 
-        login(request, django_user)
+# backend 明示
+    django_user.backend = 'django.contrib.auth.backends.ModelBackend'
 
-        return redirect('latest_movies')
+    login(request, django_user)
+
+    return redirect('latest_movies')
 
     return render(request, 'create_account.html')
