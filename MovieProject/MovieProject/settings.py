@@ -67,6 +67,18 @@ ROOT_URLCONF = 'MovieProject.urls'
 
 LOGIN_URL = '/login/'
 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://movie-app-kn17.onrender.com",
+]
+
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
+
+
+
 
 TEMPLATES = [
     {
