@@ -1,46 +1,48 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.hashers import make_password
 from ..services.supabase_client import supabase
-from supabase import create_client, Client
 
+User = get_user_model()
 
 def create_account(request):
     if request.method == 'POST':
         name = request.POST.get('user_name')
         password = request.POST.get('user_password')
 
-        print(f"[DEBUG] POST: name={name}, password={'*' * len(password)}")
-
         if not name or not password:
             messages.error(request, '全ての項目を入力してください。')
             return render(request, 'create_account.html')
 
         # Supabase重複チェック
-        try:
-            existing_user = supabase.table('users').select('name').eq('name', name).execute()
-            print(f"[DEBUG] existing_user: {existing_user}")
-
-            if existing_user.data and len(existing_user.data) > 0:
-                messages.error(request, 'このユーザー名は既に使われています。')
-                return render(request, 'create_account.html')
-
-        except Exception as e:
-            messages.error(request, f"ユーザー確認中に例外が発生しました: {e}")
+        existing_user = supabase.table('users').select('name').eq('name', name).execute()
+        if existing_user.data:
+            messages.error(request, 'このユーザー名は既に使われています。')
             return render(request, 'create_account.html')
 
-        # Supabaseに新規登録（パスワードをハッシュ化）
+        # パスワードハッシュ化
         hashed_password = make_password(password)
-        data = {'name': name, 'password': hashed_password}
-        try:
-            response = supabase.table('users').insert(data).execute()
-            print(f"[DEBUG] insert response: {response}")
-        except Exception as e:
-            messages.error(request, f"Supabase登録中に例外が発生しました: {e}")
-            return render(request, 'create_account.html')
 
-        # 登録成功 → latest_movies にリダイレクト
-        return redirect('latest_movies')  # URLパターン名を指定
+        # Supabase登録
+        response = supabase.table('users').insert({
+            'name': name,
+            'password': hashed_password
+        }).execute()
 
-    # GETの場合はアカウント作成ページを表示
+        supabase_user_id = response.data[0]['user_id']
+
+        # 🔴 Djangoユーザー作成
+        django_user = User.objects.create(
+            username=name,
+            supabase_user_id=supabase_user_id
+        )
+
+        # 🔴 backend 明示（超重要）
+        django_user.backend = 'django.contrib.auth.backends.ModelBackend'
+
+        login(request, django_user)
+
+        return redirect('latest_movies')
+
     return render(request, 'create_account.html')
