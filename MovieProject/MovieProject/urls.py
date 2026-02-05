@@ -2,9 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from django.shortcuts import redirect
 
-# ✅ 正しい views の import
-from MovieProject.Movie.views.auth_views import (
-    latest_movies,               # ← latest_movies じゃない
+from Movie.views.auth_views import (
+    latest_movies,
     tmdb_search,
     tmdb_discover,
     movie_detail,
@@ -20,6 +19,7 @@ from MovieProject.Movie.views.auth_views import (
     tmdb_person_detail,
     tmdb_person_works,
 )
+
 
 urlpatterns = [
     path('', lambda request: redirect('/login/')),
