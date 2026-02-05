@@ -65,6 +65,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'MovieProject.urls'
 
+LOGIN_URL = '/login/'
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

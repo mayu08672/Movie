@@ -6,6 +6,13 @@ from datetime import datetime
 from django.conf import settings
 from django.http import JsonResponse
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def latest_movies(request):
+    ...
+
+
 
 
 TMDB_HEADERS = {

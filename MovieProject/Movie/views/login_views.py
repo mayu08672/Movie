@@ -4,8 +4,11 @@ from django.contrib.auth.backends import ModelBackend
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from ..services.supabase_client import supabase
+from django.contrib.auth import authenticate, login
 
 User = get_user_model()
+
+
 
 def login_view(request):
     if request.method == 'POST':

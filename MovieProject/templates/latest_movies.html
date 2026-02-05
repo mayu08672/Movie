@@ -45,6 +45,13 @@
     <!-- 検索結果 -->
     <div id="movieResults" class="movie-grid"></div>
 
+    <p>
+        ログイン中:
+        {{ request.user.username }}
+        / 認証:
+        {{ request.user.is_authenticated }}
+    </p>
+
     <!-- 最新映画一覧 -->
     <div class="latest-section">
         <h1 class="section-title">最新作品</h1>
