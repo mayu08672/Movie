@@ -66,6 +66,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'MovieProject.urls'
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/latest_movies/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

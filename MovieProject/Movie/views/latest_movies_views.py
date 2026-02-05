@@ -1,28 +1,57 @@
 # views.py
 
-from django.shortcuts import render
-import requests
-from datetime import datetime
-from django.conf import settings
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
-
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+import requests
 
-@login_required
-def latest_movies(request):
-    ...
-
-
-
-
+# =========================
+# TMDB 共通設定
+# =========================
 TMDB_HEADERS = {
     "accept": "application/json",
     "Authorization": f"Bearer {settings.TMDB_ACCESS_TOKEN}",
 }
 
+# =========================
+# ログイン後トップ（映画一覧）
+# =========================
+@login_required(login_url="/login/")
+def latest_movies(request):
+    url = "https://api.themoviedb.org/3/movie/now_playing"
+    params = {
+        "language": "ja-JP",
+        "page": 1
+    }
+
+    response = requests.get(url, headers=TMDB_HEADERS, params=params)
+    movies = []
+
+    if response.status_code == 200:
+        movies = response.json().get("results", [])
+        movies.sort(
+            key=lambda x: x.get("release_date") or "0000-00-00",
+            reverse=True
+        )
+
+        for movie in movies:
+            movie["media_type"] = "movie"
+            movie["poster_url"] = (
+                f"https://image.tmdb.org/t/p/w300{movie['poster_path']}"
+                if movie.get("poster_path")
+                else "/static/noimage.png"
+            )
+
+    return render(request, "latest_movies.html", {"movies": movies})
+
+
+# =========================
+# TMDB 検索 API
+# =========================
 def tmdb_search(request):
     query = request.GET.get("query")
-    search_type = request.GET.get("type", "movie")  # movie / tv / person
+    search_type = request.GET.get("type", "movie")
 
     if not query:
         return JsonResponse({"results": []})
@@ -45,41 +74,15 @@ def tmdb_search(request):
     })
 
 
-def latest_movies(request):
-    url = "https://api.themoviedb.org/3/movie/now_playing"
-    params = {
-        "language": "ja-JP",
-        "page": 1
-    }
-
-    response = requests.get(url, headers=TMDB_HEADERS, params=params)
-    movies = []
-
-    if response.status_code == 200:
-        movies = response.json().get("results", [])
-
-        # 公開日でソート（最新順）
-        movies.sort(
-            key=lambda x: x.get("release_date") or "0000-00-00",
-            reverse=True
-        )
-
-        for movie in movies:
-            movie["media_type"] = "movie"
-            if movie.get("poster_path"):
-                movie["poster_url"] = f"https://image.tmdb.org/t/p/w300{movie['poster_path']}"
-            else:
-                movie["poster_url"] = "/static/noimage.png"
-
-    return render(request, "latest_movies.html", {"movies": movies})
-
+# =========================
+# TMDB Discover API
+# =========================
 def tmdb_discover(request):
     media_type = request.GET.get("type", "movie")
     genre = request.GET.get("genre", "")
     provider = request.GET.get("provider", "")
 
     url = f"https://api.themoviedb.org/3/discover/{media_type}"
-
     params = {
         "language": "ja-JP",
         "sort_by": "popularity.desc"
