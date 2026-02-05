@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.shortcuts import redirect
 
-from Movie.views.auth_views import (
+from MovieProject.Movie.views.auth_views import (
     latest_movies,
     tmdb_search,
     tmdb_discover,
