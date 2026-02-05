@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.hashers import check_password
+import bcrypt
 from ..services.supabase_client import supabase
 
 User = get_user_model()
-
 
 def login_view(request):
     if request.method == "POST":
@@ -34,37 +33,38 @@ def login_view(request):
 
             user_data = users[0]
 
-            # Supabaseのハッシュと照合
-            if not check_password(password, user_data["password"]):
+            # Supabase ハッシュと bcrypt で照合
+            if not bcrypt.checkpw(password.encode(), user_data["password"].encode()):
                 messages.error(request, "パスワードが違います。")
                 return render(request, "login.html")
 
-            # Djangoユーザー取得 or 作成
+            # Django ユーザー取得または作成
             django_user, created = User.objects.get_or_create(
                 username=name,
                 defaults={
                     "supabase_user_id": user_data["user_id"],
-                    "is_active": True,   # ← ここ超重要
+                    "is_active": True,
                 }
             )
 
             if created:
+                # Django でパスワードは無効化（Supabase 側で管理）
                 django_user.set_unusable_password()
-
-            # 既存ユーザーでも念のため有効化
             django_user.is_active = True
             django_user.save()
 
-            # backend 明示（これがないと login() が無効）
+            # backend 明示
             django_user.backend = "django.contrib.auth.backends.ModelBackend"
 
+            # Django にログイン
             login(request, django_user)
 
-            # 成功時は必ず redirect
+            # 成功時は redirect
             return redirect("latest_movies")
 
         except Exception as e:
-            messages.error(request, f"ログインエラー: {e}")
+            messages.error(request, f"ログインエラー: {str(e)}")
             return render(request, "login.html")
 
+    # GET 時は単純に表示
     return render(request, "login.html")
