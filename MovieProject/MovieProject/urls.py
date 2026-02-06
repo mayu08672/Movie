@@ -27,7 +27,9 @@ urlpatterns = [
     path('latest_movies/', views.latest_movies, name='latest_movies'),
     path('movie/<int:movie_id>/', views.movie_detail, name='movie_detail'),
     path('tv/<int:tv_id>/', views.tv_detail, name='tv_detail'),
-     path("api/tmdb/search/", views.tmdb_search),
+     # 削除
+path("api/search/", tmdb_search, name="tmdb_search"),
+
     path("api/tmdb/discover/", views.tmdb_discover),
     # 削除する
 path("person/<int:person_id>/", person_detail, name="person_detail"),
