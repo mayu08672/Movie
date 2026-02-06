@@ -10,31 +10,36 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+
 from pathlib import Path
-# settings.py
 import os
 from dotenv import load_dotenv
+
+# .env 読み込み
 load_dotenv()
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# =====================
+# BASE
+# =====================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# =====================
+# SECURITY
+# =====================
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "django-insecure-dev-only-key"  # ローカル用フォールバック
+)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%ri2_ko+i+rxaz&2nb&x5+cu27l5woy2bowi*fdt%9wjqydu=l'
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if not DEBUG else []
 
 
-# Application definition
-
+# =====================
+# APPLICATIONS
+# =====================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,11 +47,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'Movie.apps.MovieConfig',
 ]
 
+
+# =====================
+# MIDDLEWARE
+# =====================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    # WhiteNoise（本番で静的ファイル配信）
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,6 +69,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# =====================
+# URL / TEMPLATE
+# =====================
 ROOT_URLCONF = 'MovieProject.urls'
 
 TEMPLATES = [
@@ -75,9 +93,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'MovieProject.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# =====================
+# DATABASE
+# =====================
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -86,58 +104,53 @@ DATABASES = {
 }
 
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
+# =====================
+# AUTH
+# =====================
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
-LANGUAGE_CODE = 'ja'
-
-TIME_ZONE = 'Asia/Tokyo'
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    
-]
-# settings.py
-DEFAULT_CHARSET = 'utf-8'
-
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MBまで許容する例
 
 AUTH_USER_MODEL = 'Movie.CustomUser'
 
-TMDB_ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
 
+# =====================
+# INTERNATIONALIZATION
+# =====================
+LANGUAGE_CODE = 'ja'
+TIME_ZONE = 'Asia/Tokyo'
+USE_I18N = True
+USE_TZ = True
+
+
+# =====================
+# STATIC FILES
+# =====================
+STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# 開発環境のみ
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+    ]
+
+
+# =====================
+# DEFAULTS
+# =====================
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_CHARSET = 'utf-8'
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+
+
+# =====================
+# API KEYS
+# =====================
+TMDB_ACCESS_TOKEN = os.getenv("TMDB_ACCESS_TOKEN")
