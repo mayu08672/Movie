@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from Movie import views
 from Movie.views import person_detail
+
 from django.shortcuts import redirect
 from Movie.views import tmdb_search
 
@@ -33,6 +34,7 @@ path("api/search/", tmdb_search, name="tmdb_search"),
     path("api/tmdb/discover/", views.tmdb_discover),
     # 削除する
 path("person/<int:person_id>/", person_detail, name="person_detail"),
+
 
     path("api/movie/<int:id>/", views.tmdb_movie_detail),
     path("api/tv/<int:id>/", views.tmdb_tv_detail),
