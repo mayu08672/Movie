@@ -97,68 +97,50 @@ h2 {
     margin-bottom: 40px;
 }
 
-/* カード全体 */
+/* ポスター */
 .poster-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 6px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-    cursor: pointer;
-    /* クリック可能を示す */
-    text-decoration: none;
-    /* リンクっぽさ消す */
-    color: inherit;
-    /* 文字色維持 */
-    border-radius: 10px;
-    background: #000;
-    /* カード背景 */
-    overflow: hidden;
 }
 
 .poster-wrapper:hover {
     transform: scale(1.08);
-    box-shadow: 0 6px 18px rgba(255, 0, 0, 0.35);
 }
 
-/* ポスター画像 */
 .poster-img {
     width: 140px;
     height: 210px;
     object-fit: cover;
-    border-radius: 10px 10px 0 0;
-    background: #111;
+    border-radius: 10px;
+    background: #000;
+    box-shadow: 0 6px 18px rgba(255, 0, 0, 0.25);
 }
 
-/* 作品タイトル */
 .work-title {
-    font-weight: 600;
+    font-weight: bold;
     font-size: 14px;
-    /* 少し小さくして2行入る余裕を確保 */
-    line-height: 1.2em;
-    margin: 6px 0 4px;
-    text-align: center;
-    color: #ff6666;
-    text-shadow: 0 0 6px rgba(255, 102, 102, 0.5);
-
-    display: -webkit-box;
-    /* 2行まで表示 */
-
-    /* 最大2行 */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-word;
-    /* 長い単語も折り返す */
+    margin: 6px 0 2px;
 }
 
-
-/* 日付 */
 .work-date {
     font-size: 12px;
-    color: #ccc;
+    color: #bbb;
+}
+
+
+
+/* 戻るリンク */
+.back-link {
     text-align: center;
-    margin-bottom: 6px;
-    font-style: italic;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
+
+.back-link a {
+    color: #ff6666;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.back-link a:hover {
+    color: #ff9999;
 }

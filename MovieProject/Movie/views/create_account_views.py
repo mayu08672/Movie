@@ -8,32 +8,37 @@ def create_account(request):
         name = request.POST.get('user_name')
         password = request.POST.get('user_password')
 
+        print(f"[DEBUG] POST: name={name}, password={'*' * len(password)}")
+
         if not name or not password:
             messages.error(request, '全ての項目を入力してください。')
             return render(request, 'create_account.html')
 
-        # Supabaseで重複チェック
+        # Supabase重複チェック
         try:
-            existing = supabase.table('users').select('name').eq('name', name).execute()
-            if existing.data and len(existing.data) > 0:
+            existing_user = supabase.table('users').select('name').eq('name', name).execute()
+            print(f"[DEBUG] existing_user: {existing_user}")
+
+            if existing_user.data and len(existing_user.data) > 0:
                 messages.error(request, 'このユーザー名は既に使われています。')
                 return render(request, 'create_account.html')
+
         except Exception as e:
-            messages.error(request, f"ユーザー確認中にエラーが発生しました: {e}")
+            messages.error(request, f"ユーザー確認中に例外が発生しました: {e}")
             return render(request, 'create_account.html')
 
-        # パスワードをハッシュ化して登録
+        # Supabaseに新規登録（パスワードをハッシュ化）
         hashed_password = make_password(password)
+        data = {'name': name, 'password': hashed_password}
         try:
-            supabase.table('users').insert({
-                'name': name,
-                'password': hashed_password
-            }).execute()
+            response = supabase.table('users').insert(data).execute()
+            print(f"[DEBUG] insert response: {response}")
         except Exception as e:
-            messages.error(request, f"登録中にエラーが発生しました: {e}")
+            messages.error(request, f"Supabase登録中に例外が発生しました: {e}")
             return render(request, 'create_account.html')
 
-        messages.success(request, 'アカウント作成成功！ログインしてください。')
-        return redirect('login')
+        # 登録成功 → latest_movies にリダイレクト
+        return redirect('latest_movies')  # URLパターン名を指定
 
+    # GETの場合はアカウント作成ページを表示
     return render(request, 'create_account.html')

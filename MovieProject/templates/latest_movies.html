@@ -11,7 +11,7 @@
         <button type="button" class="provider-btn" data-provider="8">Netflix</button>
         <button type="button" class="provider-btn" data-provider="9">Amazon Prime</button>
         <button type="button" class="provider-btn" data-provider="15">Hulu</button>
-        <button type="button" class="provider-btn" data-provider="350">Apple TV+</button>
+        <button type="button" class="provider-btn" data-provider="71">U-NEXT</button>
         <button type="button" class="provider-btn" data-provider="337">Disney+</button>
 
 
@@ -34,7 +34,7 @@
 
     <!-- 検索フォーム -->
     <div class="search-section">
-        <h1 class="section-title">作品や人物をさがす</h1>
+        <h1 class="section-title">作品をさがす</h1>
         <form id="searchForm" class="search-form">
             <input type="text" id="searchInput" placeholder="作品名/人物名" required>
             <button type="submit">検索</button>
@@ -44,13 +44,6 @@
 
     <!-- 検索結果 -->
     <div id="movieResults" class="movie-grid"></div>
-
-    <p>
-        ログイン中:
-        {{ request.user.username }}
-        / 認証:
-        {{ request.user.is_authenticated }}
-    </p>
 
     <!-- 最新映画一覧 -->
     <div class="latest-section">

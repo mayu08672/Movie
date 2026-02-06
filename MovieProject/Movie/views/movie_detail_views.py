@@ -71,6 +71,3 @@ def movie_detail(request, movie_id):
         "cast": credits,
         "providers": providers
     })
-
-
-
