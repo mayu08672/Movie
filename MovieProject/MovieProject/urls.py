@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Movie import views
-from Movie.views import person_detail
 from django.shortcuts import redirect
 from Movie.views import tmdb_search
 
