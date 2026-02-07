@@ -35,7 +35,8 @@ urlpatterns = [
     path("api/person/<int:id>/credits/", tmdb_person_works),
     path("subscriptions/", my_subscriptions),
     path("subscriptions/add/", my_subscriptions),
-    path("create_account/", create_account),
+    path("create_account/", create_account, name="create_account"),
+
     path("login/", login_view),
     path("logout/", logout_view),
     path("admin/", admin.site.urls),
