@@ -7,6 +7,7 @@ from Movie.views.latest_movie_views import latest_movies
 
 # 認証・API・詳細系は auth_views から import
 from Movie.views.auth_views import (
+    latest_movies,
     tmdb_search,
     tmdb_discover,
     movie_detail,
