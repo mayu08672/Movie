@@ -13,6 +13,40 @@
     /* 常に最前面に表示 */
 }
 
+/* ロゴ全体 */
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff3b3b;
+    margin-left: 10px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+/* ロゴリンク */
+.logo-link {
+    color: inherit;
+    /* h1 の赤をそのまま使う */
+    text-decoration: none;
+    /* 下線消す */
+    cursor: pointer;
+    transition: text-shadow 0.25s ease, transform 0.15s ease;
+}
+
+/* hover時（ネオン強化） */
+.logo-link:hover {
+    text-shadow:
+        0 0 6px rgba(255, 0, 0, 0.6),
+        0 0 14px rgba(255, 0, 0, 0.9);
+}
+
+/* クリック時ちょい押し込み */
+.logo-link:active {
+    transform: scale(0.97);
+}
+
 /* サイドバーを開く・閉じるためのボタン */
 .toggle-btn {
     font-size: 24px;

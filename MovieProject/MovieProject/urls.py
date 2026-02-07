@@ -18,18 +18,27 @@ from django.contrib import admin
 from django.urls import path
 from Movie import views
 from Movie.views import person_detail
-
 from django.shortcuts import redirect
 from Movie.views import tmdb_search
+from Movie.views.collection_views import collection_page
+from Movie.views.person_detail_views import person_detail
+
 
 urlpatterns = [
-    path('', lambda request: redirect('/login/')),  # ← これ追加！
+    path('', lambda request: redirect('/latest_movies/')),  # ← これ追加！
     path('', views.latest_movies, name='latest_movies'),
     path('latest_movies/', views.latest_movies, name='latest_movies'),
     path('movie/<int:movie_id>/', views.movie_detail, name='movie_detail'),
     path('tv/<int:tv_id>/', views.tv_detail, name='tv_detail'),
+    path("api/collection/<int:collection_id>/", views.collection_detail),
+     path("collection/<int:collection_id>/", views.collection_page, name="collection_page"),
+
+    
      # 削除
-path("api/search/", tmdb_search, name="tmdb_search"),
+     path('api/tmdb/search/', views.tmdb_search, name='tmdb_search'),
+
+    
+    
 
     path("api/tmdb/discover/", views.tmdb_discover),
     # 削除する
