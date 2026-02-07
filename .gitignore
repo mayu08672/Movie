@@ -9,8 +9,7 @@ __pycache__/
 !*/migrations/0001_initial.py
 __pycache__/
 *.pyc
-__init__.py
-*/__init__.py
+
 
 
 
