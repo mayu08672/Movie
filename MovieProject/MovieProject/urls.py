@@ -21,7 +21,7 @@ from Movie.views.auth_views import (
 )
 
 urlpatterns = [
-    path("", lambda request: redirect("/latest_movies/")),
+    path("", lambda request: redirect("/login/")),
     path("latest_movies/", latest_movies, name="latest_movies"),
     path("movie/<int:movie_id>/", movie_detail, name="movie_detail"),
     path("api/tmdb/search/", tmdb_search),
