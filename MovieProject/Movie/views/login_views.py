@@ -12,6 +12,7 @@ User = get_user_model()  # 拡張ユーザーモデルを取得
 
 
 def login_view(request):
+    
     if request.method == 'POST':
         name = request.POST.get('name')
         password = request.POST.get('password')

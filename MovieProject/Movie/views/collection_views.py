@@ -4,14 +4,16 @@ from django.shortcuts import render
 from django.conf import settings
 
 
-def collection_page(request, collection_id):
-    return render(request, "collection_detail.html", {"collection_id": collection_id})
-
 
 TMDB_HEADERS = {
     "accept": "application/json",
     "Authorization": f"Bearer {settings.TMDB_ACCESS_TOKEN}",
 }
+
+def collection_page(request, collection_id):
+    return render(request, "collection_detail.html", {"collection_id": collection_id})
+
+
 
 
 def collection_detail(request, collection_id):
