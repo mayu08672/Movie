@@ -17,7 +17,7 @@ TMDB_HEADERS = {
 # =========================
 # ログイン後トップ（映画一覧）
 # =========================
-@login_required(login_url="/login/")
+
 def latest_movies(request):
     url = "https://api.themoviedb.org/3/movie/now_playing"
     params = {
