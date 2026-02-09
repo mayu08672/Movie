@@ -8,3 +8,4 @@ from .movie_detail_views import *
 from .person_detail_views import *
 from .tmdb_views import * 
 # from .subscription_views import *
+

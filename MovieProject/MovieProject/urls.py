@@ -21,6 +21,7 @@ from django.shortcuts import redirect
 from Movie.views.auth_views import person_detail
 
 
+
 urlpatterns = [
     path('', lambda request: redirect('/latest_movies/')),  # ← これ追加！
     path('', views.latest_movies, name='latest_movies'),
