@@ -41,7 +41,8 @@
             {% if w.poster_url %}
             <img class="poster-img" src="{{ w.poster_url }}" alt="{{ w.title_jp }}">
             {% else %}
-            <img class="poster-img" src="{% static 'images/20220401_object.png' %}" alt="No Image">
+           <img class="poster-img" src="{% static 'images/20220401_object.png' %}" alt="No Image">
+
             {% endif %}
 
             <p class="work-title">{{ w.title_jp }}</p>

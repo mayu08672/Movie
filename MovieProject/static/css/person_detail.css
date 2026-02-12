@@ -1,4 +1,4 @@
-/* 全体 */
+/* ────────────── 全体 ────────────── */
 body {
     margin: 0;
     padding: 0;
@@ -97,7 +97,7 @@ h2 {
     margin-bottom: 40px;
 }
 
-/* カード全体 */
+/* ────────────── カード全体 ────────────── */
 .poster-wrapper {
     display: flex;
     flex-direction: column;
@@ -106,15 +106,16 @@ h2 {
     padding: 6px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
-    /* クリック可能を示す */
     text-decoration: none;
-    /* リンクっぽさ消す */
+    /* 下線消す */
     color: inherit;
     /* 文字色維持 */
     border-radius: 10px;
     background: #000;
     /* カード背景 */
     overflow: hidden;
+    width: 140px;
+    /* カード幅固定 */
 }
 
 .poster-wrapper:hover {
@@ -124,7 +125,7 @@ h2 {
 
 /* ポスター画像 */
 .poster-img {
-    width: 140px;
+    width: 100%;
     height: 210px;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
@@ -135,23 +136,20 @@ h2 {
 .work-title {
     font-weight: 600;
     font-size: 14px;
-    /* 少し小さくして2行入る余裕を確保 */
     line-height: 1.2em;
     margin: 6px 0 4px;
     text-align: center;
     color: #ff6666;
     text-shadow: 0 0 6px rgba(255, 102, 102, 0.5);
-
     display: -webkit-box;
-    /* 2行まで表示 */
-
-    /* 最大2行 */
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-break: break-word;
-    /* 長い単語も折り返す */
+    max-height: 2.4em;
+    /* 2行で切る */
+    pointer-events: none;
+    /* タイトル上でもカードがクリック可能 */
 }
-
 
 /* 日付 */
 .work-date {
@@ -161,4 +159,6 @@ h2 {
     margin-bottom: 6px;
     font-style: italic;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    /* 日付上でもカードクリック */
 }

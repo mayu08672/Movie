@@ -33,6 +33,6 @@ def latest_movies(request):
             if movie.get("poster_path"):
                 movie["poster_url"] = f"https://image.tmdb.org/t/p/w300{movie['poster_path']}"
             else:
-                movie["poster_url"] = "/static/noimage.png"
+                movie["poster_url"] = "/static/images/20220401_object.png"
 
     return render(request, "latest_movies.html", {"movies": movies})

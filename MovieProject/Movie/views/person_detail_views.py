@@ -44,7 +44,7 @@ def person_detail(request, person_id):
         if poster:
             w["poster_url"] = f"https://image.tmdb.org/t/p/w300{poster}"
         else:
-            w["poster_url"] = "/static/20200505_noimage.png"
+            w["poster_url"] = "/static/images/20220401_object.png"
 
     return render(request, "person_detail.html", {
         "person": person,

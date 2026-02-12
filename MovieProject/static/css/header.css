@@ -27,3 +27,18 @@
     font-size: 24px;
     font-weight: bold;
 }
+
+/* ロゴリンク全体にカーソルを指マークに */
+.logo-link {
+    text-decoration: none;
+    /* 下線を消す */
+    cursor: pointer;
+    /* カーソルを指マークに */
+}
+
+/* ホバー時の色変化（任意） */
+.logo-link:hover .logo {
+    color: #ff6600;
+    /* 好きな色に変えられる */
+    transition: color 0.3s ease;
+}

@@ -1,0 +1,97 @@
+/* 全体レイアウト */
+#collectionDetail {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    color: #fff;
+    font-family: "Segoe UI", sans-serif;
+}
+
+#collectionDetail .info {
+    margin-top: 20px;
+}
+
+/* ポスター画像 */
+#collectionDetail .poster {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+/* タイトル */
+#collectionDetail h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* 概要テキスト */
+#collectionDetail p {
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+#collectionDetail strong {
+    color: #ffd369;
+}
+
+/* セクションタイトル */
+.movie-section h2 {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    border-left: 5px solid #ffd369;
+    padding-left: 10px;
+}
+
+/* 映画リスト */
+.movie-list {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+/* 映画カード */
+.movie-card {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    background: #1c1c1c;
+    padding: 10px;
+    border-radius: 12px;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    background: #2e2e2e;
+}
+
+/* 映画ポスター */
+.movie-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* 映画タイトル */
+.movie-card .title {
+    margin-top: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* 戻るリンク */
+.back-link {
+    margin-top: 30px;
+}
+
+.back-link a {
+    color: #ffd369;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}

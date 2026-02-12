@@ -134,14 +134,11 @@
 
 <body>
     <header class="header">
-        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <h1 class="logo">Movie Library</h1>
-
-        {% if request.user.is_authenticated %}
-        <span style="margin-left:20px; font-size:16px; color:#fff;">
-            ようこそ、<strong>{{ request.user.username }}</strong> さん
-        </span>
-        {% endif %}
+        
+    <a href="{% url 'latest_movies' %}" class="logo-link">
+    <h1 class="logo">Movie Library</h1>
+</a>
+        
     </header>
 
     <!-- サイドバー -->
